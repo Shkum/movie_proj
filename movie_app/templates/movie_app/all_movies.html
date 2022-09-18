@@ -1,0 +1,21 @@
+{% extends 'movie_app/base.html' %}
+
+{%  load static %}
+
+{% block title %} All movies {% endblock title %}
+
+{% block css %}
+    <link rel="stylesheet" href={% static 'movie_app/css/all_movie.css' %}>
+{% endblock %}
+
+{% block content %}
+
+<h2>List of movies</h2>
+    <ul>
+        {% for movie in movies %}
+            <li>
+                {{ movie }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
