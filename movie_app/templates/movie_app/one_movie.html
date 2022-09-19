@@ -1,0 +1,18 @@
+{% extends 'movie_app/base.html' %}
+
+{%  load static %}
+
+{% block title %} Info about movie {% endblock title %}
+
+{% block css %}
+    <link rel="stylesheet" href={% static 'movie_app/css/one_movie.css' %}>
+{% endblock %}
+
+{% block content %}
+
+    <h2>Info about movie</h2>
+
+    <h3>{{ movie }}</h3>
+
+
+{% endblock content %}

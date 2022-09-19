@@ -14,7 +14,7 @@
     <ul>
         {% for movie in movies %}
             <li>
-                {{ movie }}
+                {{ movie }}, year - {{ movie.year|default:'unknown' }}
             </li>
         {% endfor %}
     </ul>
