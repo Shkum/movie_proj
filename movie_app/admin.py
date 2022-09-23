@@ -10,14 +10,17 @@ class MovieAdmin(admin.ModelAdmin):
     # raring_status taked fom method below - additional field in response
     list_display = ['name', 'rating', 'year', 'budget', 'rating_status']
     list_editable = ['rating', 'year', 'budget']
-    ordering = ['rating', 'name']  # sorting by ...
+    ordering = ['-rating', 'name']  # sorting by ...
     list_per_page = 3  # Quantity of movies in list per one page
 
     # may use decorator instead of below method
     # admin.site.register(Movie, MovieAdmin)  # - registering our models and classes for Django Admin page
 
-
-# mov from method below is instance of class Movie (to see all attribust variable has to be annotated) !!!!!!
+    # mov from method below is instance of class Movie (to see all attribust variable has to be annotated) !!!!!!
+    # to make it sortable should be used decorator @admin.display()
+    # description - name of the column in django-admin panel (without description it will be just method name)
+    # ordering will work only if no ORDERING mentioned in MovieAdmin class
+    @admin.display(ordering='rating', description='status')
     def rating_status(self, mov: Movie):
         if mov.rating <= 50:
             return 'poor movie'
