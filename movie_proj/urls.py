@@ -15,9 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+import debug_toolbar
+
+
+admin.site.site_header = "My Administaration page"
+admin.site.index_title = "My super admin page"
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('movie_app.urls')),
-
+    path('__debug__/', include(debug_toolbar.urls)),
 ]
+
+

@@ -2,7 +2,7 @@
 
 {%  load static %}
 
-{% block title %} Info about movie {% endblock title %}
+{% block title %} Info about movie {{ movie.name }} {% endblock title %}
 
 {% block css %}
     <link rel="stylesheet" href={% static 'movie_app/css/one_movie.css' %}>
@@ -10,9 +10,10 @@
 
 {% block content %}
 
-    <h2>Info about movie</h2>
+    <h2>Info about movie {{ movie.name }}</h2>
 
-    <h3>{{ movie }}</h3>
+    <h3>{{ movie.name }}</h3>
+    <h3>Rating - {{ movie.rating }}%</h3>
 
 
 {% endblock content %}
