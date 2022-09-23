@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from .models import Movie
 from django.db.models import QuerySet
 
@@ -14,6 +14,12 @@ class MovieAdmin(admin.ModelAdmin):
     ordering = ['-rating', 'name']  # sorting by ...
     list_per_page = 3  # Quantity of movies in list per one page
     actions = ['set_dollars', 'set_euro']  # register action for django admin panel - set currency to USD and EURO
+    # search_fields = ['name', 'rating'] # add search field to django admin panel - searching by name or raring (or - due to different variable type)
+    search_fields = ['name__startswith', 'rating'] # add search field to django admin panel - searching by name start with... or raring (or - due to different variable type)
+    # search_fields = ['name__istartswith', 'rating'] # add search field to django admin panel - searching by name start with... or raring (or - due to different variable type) istartswith - not
+    # sensible to letter register
+
+
 
     # may use decorator instead of below method
     # admin.site.register(Movie, MovieAdmin)  # - registering our models and classes for Django Admin page
@@ -41,4 +47,8 @@ class MovieAdmin(admin.ModelAdmin):
     @admin.action(description='Set currency to EURO')
     def set_euro(self, request, qs: QuerySet):
         count_update = qs.update(currency=Movie.EUR)
-        self.message_user(request, f'updated {count_update} records') # - show message how many records have been updated
+        self.message_user(
+                          request,
+                          f'updated {count_update} records',
+                          level=messages.WARNING
+        )  # - show message how many records have been updated
