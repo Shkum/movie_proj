@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Movie
+from django.db.models import QuerySet
 
 
 # Register your models here.
@@ -8,10 +9,11 @@ from .models import Movie
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     # raring_status taked fom method below - additional field in response
-    list_display = ['name', 'rating', 'year', 'budget', 'rating_status']
-    list_editable = ['rating', 'year', 'budget']
+    list_display = ['name', 'rating', 'currency', 'budget', 'rating_status']
+    list_editable = ['rating', 'currency', 'budget']
     ordering = ['-rating', 'name']  # sorting by ...
     list_per_page = 3  # Quantity of movies in list per one page
+    actions = ['set_dollars', 'set_euro']  # register action for django admin panel - set currency to USD and EURO
 
     # may use decorator instead of below method
     # admin.site.register(Movie, MovieAdmin)  # - registering our models and classes for Django Admin page
@@ -29,3 +31,14 @@ class MovieAdmin(admin.ModelAdmin):
         if mov.rating <= 85:
             return 'Good movie'
         return 'Top movie'
+
+    # Add to django admin additional action in choice - set currency to USD
+    @admin.action(description='Set currency to USD')
+    def set_dollars(self, request, qs: QuerySet):
+        qs.update(currency=Movie.USD)
+
+    # Add to django admin additional action in choice - set currency to EURO
+    @admin.action(description='Set currency to EURO')
+    def set_euro(self, request, qs: QuerySet):
+        count_update = qs.update(currency=Movie.EUR)
+        self.message_user(request, f'updated {count_update} records') # - show message how many records have been updated
