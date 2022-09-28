@@ -1,11 +1,12 @@
 from django.contrib import admin, messages
-from .models import Movie, Director, Actor
+from .models import Movie, Director, Actor, DressingRoom
 from django.db.models import QuerySet
 
 # Register your models here.
 
 admin.site.register(Director)
 admin.site.register(Actor)
+# admin.site.register(DressingRoom)
 
 
 # class for own filter
@@ -92,3 +93,10 @@ class MovieAdmin(admin.ModelAdmin):
             f'updated {count_update} records',
             level=messages.WARNING
         )  # - show message how many records have been updated
+
+
+
+@admin.register(DressingRoom)
+class DressingRoomAdmin(admin.ModelAdmin):
+    list_display = ['floor', 'room_number', 'actor']
+

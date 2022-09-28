@@ -30,6 +30,11 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -138,6 +143,4 @@ import mimetypes
 
 mimetypes.add_type("application/javascript", ".js", True)
 
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
+
