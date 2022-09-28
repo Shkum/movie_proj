@@ -1,11 +1,12 @@
 from django.contrib import admin, messages
-from .models import Movie, Director
+from .models import Movie, Director, Actor
 from django.db.models import QuerySet
-
 
 # Register your models here.
 
 admin.site.register(Director)
+admin.site.register(Actor)
+
 
 # class for own filter
 class RatingFilter(admin.SimpleListFilter):
@@ -36,8 +37,8 @@ class RatingFilter(admin.SimpleListFilter):
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     # raring_status taken fom method below - additional field in response
-    list_display = ['name', 'rating', 'currency', 'budget', 'rating_status']
-    list_editable = ['rating', 'currency', 'budget']
+    list_display = ['name', 'rating', 'director', 'budget', 'rating_status']
+    list_editable = ['rating', 'director', 'budget']
     ordering = ['-rating', 'name']  # sorting by ...
     list_per_page = 3  # Quantity of movies in list per one page
     actions = ['set_dollars', 'set_euro']  # register action for django admin panel - set currency to USD and EURO
@@ -46,6 +47,10 @@ class MovieAdmin(admin.ModelAdmin):
     # search_fields = ['name__istartswith', 'rating'] # add search field to django admin panel - searching by name start with... or raring (or - due to different variable type) istartswith - not
     # sensible to letter register
     list_filter = ['name', 'currency', RatingFilter]
+
+    # add selection field (with arrows) to actors selection field
+    filter_horizontal = ['actors']
+    # filter_vertical = ['actors'] # similar to above, but vertical
 
     # create field which will be filled automatically during typing in field NAME
     prepopulated_fields = {'slug': ('name',)}
@@ -56,11 +61,10 @@ class MovieAdmin(admin.ModelAdmin):
     # hide following fields from adding movie at django admin panel
     # exclude = ['currency', 'budget', 'slug']
 
-
     # may use decorator instead of below method
     # admin.site.register(Movie, MovieAdmin)  # - registering our models and classes for Django Admin page
 
-    # mov from method below is instance of class Movie (to see all attribust variable has to be annotated) !!!!!!
+    # mov from method below is instance of class Movie (to see all attributes variable has to be annotated) !!!!!!
     # to make it sortable should be used decorator @admin.display()
     # description - name of the column in django-admin panel (without description it will be just method name)
     # ordering will work only if no ORDERING mentioned in MovieAdmin class

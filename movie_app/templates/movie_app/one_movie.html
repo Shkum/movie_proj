@@ -12,8 +12,21 @@
 
     <h2>Info about movie {{ movie.name }}</h2>
 
-    <h3>{{ movie.name }}</h3>
+    <h3>{{ movie.name|title }}</h3>
     <h3>Rating - {{ movie.rating }}%</h3>
+    <h3>Year - {{ movie.year }}%</h3>
+    <hr>
+    <h4>Director:</h4>
+    <h4>Name - {{ movie.director.first_name }}</h4>
+    <h4>Family name - {{ movie.director.last_name }}</h4>
+    <h4>E-Mail - {{ movie.director.director_email }}</h4>
+    <hr>
+    <h4>List of actors:</h4>
+    <ul>
+        {% for actor in movie.actors.all %}
+            <li>{{ actor }}</li>
+        {% endfor %}
+    </ul>
 
 
 {% endblock content %}

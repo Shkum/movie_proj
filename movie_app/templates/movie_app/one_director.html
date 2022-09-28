@@ -1,0 +1,33 @@
+{% extends 'movie_app/base.html' %}
+
+{%  load static %}
+
+{% block title %} Info about director {{ director.first_name }} {{ director.last_name}} {% endblock title %}
+
+{% block content %}
+
+
+    <h2>Info about director:</h2>
+    <h3>Name: {{ director.first_name }} {{ director.last_name}}</h3>
+    <h3>Email: {{ director.director_email }}</h3>
+
+    <hr>
+    <h4>List of Movies:</h4>
+    <ul>
+{#        {% for movie in director.movie_set.all %}#}
+{#        use related name instead of movie_set#}
+        {% for movie in director.movies.all %}
+            <li>{{ movie }}</li>
+        {% endfor %}
+    </ul>
+
+{#        <hr>#}
+{#    <h4>List of Actors:</h4>#}
+{#    <ul>#}
+{#        {% for actor in director.actors.all %}#}
+{#            <li>{{ actor }}</li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+
+
+{% endblock content %}

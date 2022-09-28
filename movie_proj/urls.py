@@ -18,7 +18,7 @@ from django.urls import path, include
 import debug_toolbar
 
 
-admin.site.site_header = "My Administaration page"
+admin.site.site_header = "My Administration page"
 admin.site.index_title = "My super admin page"
 
 
